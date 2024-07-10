@@ -1,4 +1,4 @@
-rootProject.name = 'SparkFaces23Jun'
+rootProject.name = 'SparkFaces'
 
 dependencyResolutionManagement {
   versionCatalogs {

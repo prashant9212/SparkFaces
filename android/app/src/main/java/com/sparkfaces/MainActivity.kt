@@ -1,4 +1,4 @@
-package com.sparkfaces23jun
+package com.sparkfaces
 
 import android.os.Build
 import android.os.Bundle

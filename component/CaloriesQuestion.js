@@ -3,6 +3,10 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import styles from '../styleSheet/mainStyle';
 import { SelectList } from 'react-native-dropdown-select-list'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { baseUrl } from '../config/config';
+import { toast } from './common/toast';
+import { useNavigation } from '@react-navigation/native';
 
 const CaloriesQuestion = () => {
     const [height, setHeight] = React.useState("");
@@ -12,7 +16,7 @@ const CaloriesQuestion = () => {
     const [fitness_level, setSelectedQ3] = React.useState("");
     const [goal_level, setSelectedQ4] = React.useState("");
     console.log(fitness_level + " | " + goal_level + " | " + gender + " | " + height + " | " + age + " | " + weight)
-
+    const navigation = useNavigation();
     const [userToken, setMainToken] = useState();
     useEffect(() => {
         const asynget11 = async () => {
@@ -45,9 +49,15 @@ const CaloriesQuestion = () => {
     ]
 
     const handleSubmit = async () => {
-        const Formdata = {
-            height, weight, fitness_level, goal_level, gender, age
-        };
+        
+        const formData = new FormData();
+        formData.append("height", height);
+        formData.append("weight", weight);
+        formData.append("fitness_level", fitness_level);
+        formData.append("goal_level", goal_level);
+        formData.append('gender',gender);
+        formData.append('age',age);
+        
 
         if (height.length < 1) {
             toast("Please enter height");
@@ -73,23 +83,24 @@ const CaloriesQuestion = () => {
             toast("Please enter age");
             return;
         }
-
-        axios
-            .post(baseUrl + 'target-calories', Formdata, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${JSON.parse(userToken)}`,
-                },
-            })
-            .then((response) => {
-                console.log(response);
-                toast("Data Successfully Sumbit");
-                navigation.navigate("Calories")
-            })
-            .catch((error) => {
-                console.log(error);
-                toast("Error" + " " + error);
-            });
+        AsyncStorage.getItem("token").then((value)=>{
+            axios
+                .post(baseUrl + 'target-calories', formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${JSON.parse(value)}`,
+                    },
+                })
+                .then((response) => {
+                    console.log(response);
+                    toast("Data Successfully Sumbit");
+                    navigation.navigate("Calories")
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast("Error" + " " + error);
+                });
+        })
     };
 
     return (

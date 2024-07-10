@@ -67,8 +67,10 @@ const Register = ({ navigation }) => {
                 navigation.navigate("Login")
             })
             .catch((error) => {
-                console.log(error);
-                toast("Error" + " " + error);
+                if(error && error.response && error.response.data && error.response.data.message)
+                {
+                    toast(error.response.data.message);
+                }
             });
     };
 

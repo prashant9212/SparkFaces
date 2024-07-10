@@ -133,7 +133,8 @@ const Login = ({ navigation }) => {
                         }
                       })
                       .catch((err) => {
-                        toast("Invalid Otp.");
+                        if(err && err.response && err.response.data && err.response.data.message)
+                        toast(err.response.data.message);
                         console.log(err, err.response.data, {
                           phone_number: email,
                           code: password,

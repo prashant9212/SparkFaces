@@ -16,6 +16,7 @@ import Orientation from "react-native-orientation-locker";
 import { ActivityIndicator } from "react-native-paper";
 import Video from "react-native-video";
 import { baseUrl } from "../config/config";
+import { toast } from "./common/toast";
 
 const MyProgramsDetailsVideo = ({ navigation }) => {
   const route = useRoute();
@@ -23,29 +24,58 @@ const MyProgramsDetailsVideo = ({ navigation }) => {
   const [singleProgramVideo, setSingleProgramVideo] = useState('');
   const [singleProgramAllData, setSingleProgramAllData] = useState('');
   const [userToken, setMainToken] = useState();
-  useEffect(() => {
-    const ProgramFun = async () => {
-      if (userToken) {
-        try {
-          const response = await axios.get(
-            baseUrl + `single_programmvideo?id=${id}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userToken}`,
-              },
-            }
-          );
-          const SingleProgramVideo = response.data.data.programm_video;
-          const setSingleProgram = response.data.data;
-          console.log("Sinlge Video Data", SingleProgramVideo);
+  const [responseTaken, setResponseTaken] = useState(false);
+  const handleReaction=(reactionType)=>{
+    if(responseTaken)
+    {
+      toast("You have already rated this video");
+      return;
+    }
+    AsyncStorage.getItem('token').then((t)=>{
+      const token = JSON.parse(t);
+      setResponseTaken(true);
+      axios.post(baseUrl+'programmvideo_update',{
+        id,
+        type:reactionType
+      },{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((res)=>{
+        console.log("Reaction Response", res.data);
+        setSingleProgramAllData(res.data.data);
+      }).catch((err)=>{
+        console.log("Reaction Error", err);
+        toast("Something went wrong");
+        setResponseTaken(false);
+      });
+    })
+  }
+  const ProgramFun = async () => {
+    if (userToken) {
+      try {
+        const response = await axios.get(
+          baseUrl + `single_programmvideo?id=${id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
+        const SingleProgramVideo = response.data.data.programm_video;
+        const setSingleProgram = response.data.data;
+        console.log("Sinlge Video Data", SingleProgramVideo);
+        
           setSingleProgramVideo(SingleProgramVideo);
-          setSingleProgramAllData(setSingleProgram);
-        } catch (error) {
-          console.log("Program Error", error);
-        }
+        setSingleProgramAllData(setSingleProgram);
+      } catch (error) {
+        console.log("Program Error", error);
       }
-    };
+    }
+  };
+  useEffect(() => {
     const asynget11 = async () => {
       const MainToken = await AsyncStorage.getItem("token");
       setMainToken(JSON.parse(MainToken));
@@ -91,19 +121,19 @@ const MyProgramsDetailsVideo = ({ navigation }) => {
         >
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("");
+             handleReaction('like');
             }}
             style={styles.ProgramThums}
           >
-            <Text style={{ fontSize: 18, fontWeight: 500, color: 'green' }}><MaterialCommunityIcons name="thumb-up-outline" size={24} color={"green"} /> {singleProgramAllData.like === null ? (0) : (<Text>{singleProgramAllData?.like}</Text>)}</Text>
+            <Text style={{ fontSize: 18, fontWeight: 500, color:responseTaken?'#aaa' :'green' }}><MaterialCommunityIcons name="thumb-up-outline" size={24} color={responseTaken?"#aaa":"green"}/> {singleProgramAllData.like === null ? (0) : (<Text>{singleProgramAllData?.like}</Text>)}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("");
+              handleReaction('dislike');
             }}
             style={styles.ProgramThums}
           >
-            <Text style={{ fontSize: 18, fontWeight: 500, color: 'red' }}><MaterialCommunityIcons name="thumb-down-outline" size={24} color={"red"} /> {singleProgramAllData.dislike === null ? (0) : (<Text>{singleProgramAllData?.dislike}</Text>)}</Text>
+            <Text style={{ fontSize: 18, fontWeight: 500, color: responseTaken?'#aaa':'red' }}><MaterialCommunityIcons name="thumb-down-outline" size={24}color={responseTaken?"#aaa":"red"}/> {singleProgramAllData.dislike === null ? (0) : (<Text>{singleProgramAllData?.dislike}</Text>)}</Text>
           </TouchableOpacity>
         </View>
       </View>

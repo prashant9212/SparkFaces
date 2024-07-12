@@ -407,7 +407,7 @@ const Calories = ({ navigation }) => {
                                       <Text style={{ backgroundColor: '#f7f7f7', borderWidth: 1, borderColor: '#eee', padding: 2, paddingLeft: 5, marginRight: 10, borderRadius: 10, fontSize: 11 }}>{diet.calories} Cals</Text>
                                       <Text style={{ backgroundColor: '#f7f7f7', borderWidth: 1, borderColor: '#eee', padding: 2, paddingLeft: 5, marginRight: 10, borderRadius: 10, fontSize: 11 }}>{diet.carbs} Carbs</Text>
                                       <Text style={{ backgroundColor: '#f7f7f7', borderWidth: 1, borderColor: '#eee', padding: 2, paddingLeft: 5, marginRight: 10, borderRadius: 10, fontSize: 11 }}>{diet.protein} Protein</Text>
-                                      <Text style={{ backgroundColor: '#f7f7f7', borderWidth: 1, borderColor: '#eee', padding: 2, paddingLeft: 5, marginRight: 10, borderRadius: 10, fontSize: 11 }}>{diet.fat} Fat</Text>
+                                      {/* <Text style={{ backgroundColor: '#f7f7f7', borderWidth: 1, borderColor: '#eee', padding: 2, paddingLeft: 5, marginRight: 10, borderRadius: 10, fontSize: 11 }}>{diet.fat} Fat</Text> */}
                                       <Text style={{ backgroundColor: '#f7f7f7', borderWidth: 1, borderColor: '#eee', padding: 2, paddingLeft: 5, marginRight: 10, borderRadius: 10, fontSize: 11 }}>{diet.pivot.serving} Serving</Text>
                                     </View>
                                   </View>

@@ -47,7 +47,7 @@ const Profile = ({ navigation }) => {
               <Image source={{ uri: `${userProfile?.profile_image}` }} style={{ width: 90, height: 90, borderRadius: 50, }}></Image>
             </View>
             <View style={{ padding: 8 }}>
-              <Text style={{ fontSize: 20, fontWeight: '500' }}>{userProfile?.display_name}</Text>
+              <Text style={{ fontSize: 20, fontWeight: '500' }}>{userProfile?.first_name} {userProfile?.last_name}</Text>
               <Text style={{ marginTop: 2, marginBottom: 12 }}>{userProfile?.email}</Text>
               <TouchableOpacity style={{ flexDirection: 'row', }}
                 onPress={() => {

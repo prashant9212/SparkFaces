@@ -108,9 +108,11 @@ const CaloriesEdit = ({ navigation }) => {
                   </View>
                   <View style={{ flex: 5 }}>
                     <Text style={styles.addCalTitle}>Calories</Text>
-                    <Text style={styles.addCalDis}>{singalFood?.calories} cals/cup</Text>
+                    <Text style={styles.addCalDis}>{singalFood?.calories} cals/{singalFood.servings}</Text>
                     <Text style={styles.addCalTitle}>Carbohydrates</Text>
                     <Text style={styles.addCalDis}>{singalFood?.carbs} gm</Text>
+                    {/* <Text style={styles.addCalTitle}>servings</Text>
+                    <Text style={styles.addCalDis}>{singalFood.servings}</Text> */}
                   </View>
                   <View style={{ flex: 4 }}>
                     <Text style={styles.addCalTitle}>Fat</Text>
@@ -123,7 +125,7 @@ const CaloriesEdit = ({ navigation }) => {
               <View style={{ marginTop: 10, marginBottom: 10 }}>
                 <Text style={{ color: '#555' }}>Select The Serving Quantity</Text>
                 <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                  <Text style={{ color: '#555' }}>Cup (250ml)</Text>
+                  <Text style={{ color: '#555' }}>{singalFood.servings}</Text>
                 </View>
               </View>
               <TextInput

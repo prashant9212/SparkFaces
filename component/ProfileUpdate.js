@@ -200,7 +200,7 @@ const ProfileUpdate = ({ navigation }) => {
                 <TouchableOpacity
                 style={{justifyContent:'center',flex:1,alignItems:'center',padding:10}}
                   onPress={openImagePicker}>
-                  <Text>Upload New Image</Text>
+                  <Text><MaterialCommunityIcons name="file-upload-outline" size={16} style={{ color: '#000' }} /> Upload Image</Text>
                 </TouchableOpacity>
               </View>
             </View>

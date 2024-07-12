@@ -83,9 +83,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.sparkfaces"
+    namespace "com.sparkfaces.SparkFaces"
     defaultConfig {
-        applicationId "com.sparkfaces"
+        applicationId "com.sparkfaces.SparkFaces"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

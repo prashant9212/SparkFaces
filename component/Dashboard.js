@@ -254,7 +254,7 @@ const Dashboard = ({ navigation }) => {
                 navigation.navigate("Profile");
               }}
             >
-              <Image
+              {/* <Image
                 style={{
                   resizeMode: "cover",
                   width: 40,
@@ -262,7 +262,8 @@ const Dashboard = ({ navigation }) => {
                   borderRadius: 50,
                 }}
                 source={require("../assets/user.jpg")}
-              />
+              /> */}
+              <Image source={{ uri: `${userData2?.profile_image}` }} style={{ resizeMode: "cover", width: 40, height: 40, borderRadius: 50, }} />
             </TouchableOpacity>
           </View>
           <Text
@@ -402,8 +403,8 @@ const Dashboard = ({ navigation }) => {
             <View style={{ borderRadius: 10, paddingBottom: 10 }}>
               {Loading ?
                 <View style={{ alignItems: 'center', }}>
-                  <ActivityIndicator size="small" style={{ marginTop: '20%', }} />
-                  <Text style={{ marginTop: 10, }}>Coming Soon...</Text>
+                  {/* <ActivityIndicator size="small" style={{ marginTop: '20%', }} /> */}
+                  <Text style={{ marginTop: 10, fontSize:20, padding:20 }}>Coming Soon...</Text>
                 </View>
                 :
                 <View

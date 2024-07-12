@@ -9,6 +9,7 @@ import { baseUrl } from "../config/config";
 import { CommonActions, useNavigation, useRoute } from "@react-navigation/native";
 import { toast } from "./common/toast";
 import Item from "./Item";
+import { ScrollView } from "react-native";
 
 const CaloriesSearch = () => {
   const navigation = useNavigation();
@@ -185,44 +186,48 @@ const CaloriesSearch = () => {
               />
             </Text>
           </View>
-          <View>
-            <View style={{ margin: 10 }}>
-              {renderData?.map((item, index) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate("CaloriesSearchAdd", {
-                        FoodType: route?.params?.type,
-                        ProductId: item.id
-                      });
-                    }}
-                  >
-                    <View key={index} style={{ marginBottom: 10, borderColor: '#ccc', borderWidth: 1, borderRadius: 5 }}>
-                      <View style={{ flexDirection: 'row', }}>
-                        <Text style={{ backgroundColor: '#eee', width: '100%', padding: 8, fontSize: 15, textTransform: 'capitalize' }}>{item.title}</Text>
+          <View style={{ height: 560 }}>
+            <ScrollView>
+              <View style={{ margin: 10 }}>
+                {renderData?.map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate("CaloriesSearchAdd", {
+                          FoodType: route?.params?.type,
+                          ProductId: item.id
+                        });
+                      }}
+                    >
+                      <View key={index} style={{ marginBottom: 10, borderColor: '#ccc', borderWidth: 1, borderRadius: 5 }}>
+                        <View style={{ flexDirection: 'row', }}>
+                          <Text style={{ backgroundColor: '#eee', width: '100%', padding: 8, fontSize: 15, textTransform: 'capitalize' }}>{item.title}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', padding: 5, backgroundColor: '#fff' }}>
+                          <View style={{ flex: 3 }}>
+                            <Image source={{ uri: item.diet_image }} style={styles.AddCalImg}></Image>
+                          </View>
+                          <View style={{ flex: 5 }}>
+                            <Text style={styles.addCalTitle}>Calories</Text>
+                            <Text style={styles.addCalDis}>{item.calories} cals/{item.servings}</Text>
+                            <Text style={styles.addCalTitle}>Carbohydrates</Text>
+                            <Text style={styles.addCalDis}>{item.carbs} gm</Text>
+                            {/* <Text style={styles.addCalTitle}>servings</Text>
+                            <Text style={styles.addCalDis}>{item.servings}</Text> */}
+                          </View>
+                          <View style={{ flex: 4 }}>
+                            <Text style={styles.addCalTitle}>Fat</Text>
+                            <Text style={styles.addCalDis}>{item.fat} gm</Text>
+                            <Text style={styles.addCalTitle}>Proten</Text>
+                            <Text style={styles.addCalDis}>{item.protein} gm</Text>
+                          </View>
+                        </View>
                       </View>
-                      <View style={{ flexDirection: 'row', padding: 5, backgroundColor: '#fff' }}>
-                        <View style={{ flex: 3 }}>
-                          <Image source={{ uri: item.diet_image }} style={styles.AddCalImg}></Image>
-                        </View>
-                        <View style={{ flex: 5 }}>
-                          <Text style={styles.addCalTitle}>Calories</Text>
-                          <Text style={styles.addCalDis}>{item.calories} cals/cup</Text>
-                          <Text style={styles.addCalTitle}>Carbohydrates</Text>
-                          <Text style={styles.addCalDis}>{item.carbs} gm</Text>
-                        </View>
-                        <View style={{ flex: 4 }}>
-                          <Text style={styles.addCalTitle}>Fat</Text>
-                          <Text style={styles.addCalDis}>{item.fat} gm</Text>
-                          <Text style={styles.addCalTitle}>Proten</Text>
-                          <Text style={styles.addCalDis}>{item.protein} gm</Text>
-                        </View>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </ScrollView>
           </View>
         </View>
       )}
